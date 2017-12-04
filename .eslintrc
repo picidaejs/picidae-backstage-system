@@ -8,7 +8,15 @@
     "comma-dangle": ["error", "never"],
     "no-cond-assign": ["error", "always"],
 
-    "no-console": "off"
+    "no-console": "off",
+    "eqeqeq": ["error", "smart"],
+    "curly": ["error", "multi"],
+    "no-else-return": ["error"],
+    "no-eval": ["error"],
+    "no-use-before-define": ["error"],
+    "no-undef": ["error"],
+    "array-bracket-spacing": ["error", "always"],
+    "object-curly-spacing": ["error", "always"]
   },
   "parserOptions": {
     "ecmaVersion": 8,

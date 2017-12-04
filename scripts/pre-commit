@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+SELF_PATH="$(cd -P -- "$(dirname -- "$0")" && pwd -P)/$(basename -- "$0")"
+SELF_PATH="$(readlink "$SELF_PATH" || echo $SELF_PATH)"
+DIR_PATH="$(dirname "$SELF_PATH")"
+
+cd $DIR_PATH
+../node_modules/.bin/eslint ../src --fix
+
+if [ !"$?" -eq "0" ]; then
+  echo "Shit! Error Happened: eslint" >&2
+fi

@@ -16,6 +16,20 @@ module.exports = Object.assign(
       path: nps.join(__dirname, '../../dist/frontend'),
       filename: '[path][name]-bundle-[chunkhash].js',
       chunkFilename: '[path][name]-[chunkhash].js'
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: [ /node_modules/ ],
+          use: {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true
+            }
+          }
+        }
+      ]
     }
   },
   customizedConfig

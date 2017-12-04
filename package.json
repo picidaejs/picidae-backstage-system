@@ -6,6 +6,7 @@
   "main": "dist/backend/index.js",
   "scripts": {
     "start": "node .",
+    "postinstall": "ln -sf \"$PWD\"\"/scripts/pre-commit\" .git/hooks",
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel:build": "rm -rf dist/* && mkdir -p dist && babel src -d dist --ignore=src/frontend/**.js* -D",
     "back:dev": "babel src -d dist --ignore=src/frontend/**.js* -Dw",
@@ -20,12 +21,17 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
     "eslint": "^4.12.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
+    "less-loader": "^4.0.5",
     "material-ui": "^0.20.0",
+    "style-loader": "^0.19.0",
     "webpack": "^3.9.1"
   }
 }
