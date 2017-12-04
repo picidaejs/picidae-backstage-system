@@ -6,7 +6,7 @@
 
 ## TODO
 
-- UI 交互设计  
+- UI 交互设计 (material-ui)  
 - 抽象且通用的接口
     - 配置文件的修改
     - core  
@@ -18,3 +18,6 @@
 - (picidae)指令的配置和监控
 - 权限控制（不打算使用数据库）
 
+## Other Todo
+
+1. lint 添加至 git_hook
