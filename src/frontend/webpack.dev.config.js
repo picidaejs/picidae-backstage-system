@@ -5,28 +5,22 @@
  * @description:
  */
 var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-
-var extractLess = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
-  disable: process.env.NODE_ENV === 'development'
-})
 
 module.exports = {
-  devtool: 'source-map',
-  devServer: {},
-  loader: {},
+  devtool: 'cheap-source-map',
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:7890'
+      }
+    }
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin(),
-    extractLess.extract({
-      use: [
-        { loader: 'css-loader' }
-      ]
-    })
+    new webpack.NamedModulesPlugin()
   ]
 }

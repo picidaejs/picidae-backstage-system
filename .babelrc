@@ -8,9 +8,19 @@
           "browsers": ["last 2 versions"]
         }
       }
-    ]
+    ],
+    "react"
   ],
   "plugins": [
+    "react-hot-loader/babel",
+    [
+      "tiny-import",
+      {
+        "test": "material-ui",
+        "moduleMapper": "",
+        "easyModuleMapper": { "enable": false }
+      }
+    ],
     "transform-decorators-legacy",
     [
       "transform-runtime",

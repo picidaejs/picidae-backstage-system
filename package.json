@@ -9,8 +9,9 @@
     "postinstall": "ln -sf \"$PWD\"\"/scripts/pre-commit\" .git/hooks",
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel:build": "rm -rf dist/* && mkdir -p dist && babel src -d dist --ignore=src/frontend/**.js* -D",
-    "back:dev": "babel src -d dist --ignore=src/frontend/**.js* -Dw",
-    "front:dev": "cd src/frontend && webpack-dev-server",
+    "back:dev": "babel src -d dist --ignore=src/frontend/** -Dw",
+    "front:dev": "cd src/frontend && cross-env NODE_ENV=development webpack-dev-server --progress",
+    "front:build": "rm -rf dist/frontend/*; cd src/frontend && cross-env NODE_ENV=production webpack ",
     "lint": "eslint ./src --fix"
   },
   "keywords": [],
@@ -20,18 +21,34 @@
     "koa": "^2.4.1"
   },
   "devDependencies": {
+    "autoprefixer": "^7.2.1",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-tiny-import": "0.0.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.1.1",
     "css-loader": "^0.28.7",
+    "cssnano": "^3.10.0",
     "eslint": "^4.12.1",
+    "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^3.0.2",
+    "history": "^3.3.0",
     "html-webpack-plugin": "^2.30.1",
+    "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "material-ui": "^0.20.0",
+    "normalize.css": "^7.0.0",
+    "nprogress": "^0.2.0",
+    "postcss-loader": "^2.0.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3",
+    "react-router": "^3.2.0",
     "style-loader": "^0.19.0",
-    "webpack": "^3.9.1"
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.9.5"
   }
 }
