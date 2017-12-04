@@ -13,8 +13,6 @@ var extractLess = new ExtractTextPlugin({
   disable: process.env.NODE_ENV === 'development'
 })
 
-a = 222
-
 module.exports = {
   devtool: 'source-map',
   devServer: {},

@@ -7,7 +7,7 @@ cd $DIR_PATH
 ../node_modules/.bin/eslint ../src --fix
 
 old_exit_code=$?
-if [ !"$old_exit_code" -eq "0" ]; then
-  echo "Shit! Error Happened: eslint" >&2
-  ?=$old_exit_code
+if [[ !"$old_exit_code" -eq "0" ]]; then
+  echo -e "\033[1;31mShit! Error Happened: eslint\nPlease fix them and then commit :)" >&2
+  exit $old_exit_code
 fi
