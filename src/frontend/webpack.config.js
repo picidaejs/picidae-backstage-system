@@ -11,17 +11,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var assign = require('./utils/array-append-assign')
 
 var IS_PROD_ENV = process.env.NODE_ENV === 'production'
+console.log('IS_PROD_ENV', IS_PROD_ENV)
 var customizedConfig =
       IS_PROD_ENV ? require('./webpack.prod.config') : require('./webpack.dev.config')
-
-var extractLess = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
-  disable: !IS_PROD_ENV
-})
-var extractCss = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
-  disable: !IS_PROD_ENV
-})
 
 module.exports = assign(
   {
@@ -37,8 +29,10 @@ module.exports = assign(
       chunkFilename: '[name]-[chunkhash].js'
     },
     plugins: [
-      extractLess,
-      extractCss,
+      new ExtractTextPlugin({
+        filename: '[name].[contenthash].css',
+        disable: !IS_PROD_ENV
+      }),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['common'],
         filename: '[name]-[hash].js'
@@ -62,9 +56,9 @@ module.exports = assign(
         },
         {
           test: /\.less$/,
-          use: extractLess.extract({
+          use: ExtractTextPlugin.extract({
             use: [
-              { loader: 'css-loader' },
+              { loader: 'css-loader', options: { minimize: true } },
               {
                 loader: 'postcss-loader',
                 options: {
@@ -84,9 +78,9 @@ module.exports = assign(
         },
         {
           test: /\.css/,
-          use: extractCss.extract({
+          use: ExtractTextPlugin.extract({
             use: [
-              { loader: 'css-loader' },
+              { loader: 'css-loader', options: { minimize: true } },
               {
                 loader: 'postcss-loader',
                 options: {
