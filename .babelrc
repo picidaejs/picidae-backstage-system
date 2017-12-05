@@ -1,4 +1,19 @@
 {
+  "env": {
+    "browser": {
+      "plugins": [
+        "react-hot-loader/babel",
+        [
+          "tiny-import",
+          {
+            "test": "material-ui",
+            "moduleMapper": "",
+            "easyModuleMapper": { "enable": false }
+          }
+        ]
+      ]
+    }
+  },
   "presets": [
     [
       "env",
@@ -12,15 +27,6 @@
     "react"
   ],
   "plugins": [
-    "react-hot-loader/babel",
-    [
-      "tiny-import",
-      {
-        "test": "material-ui",
-        "moduleMapper": "",
-        "easyModuleMapper": { "enable": false }
-      }
-    ],
     "transform-decorators-legacy",
     [
       "transform-runtime",
@@ -29,5 +35,8 @@
         "regenerator": true
       }
     ]
+  ],
+  "ignore": [
+    "public/**"
   ]
 }

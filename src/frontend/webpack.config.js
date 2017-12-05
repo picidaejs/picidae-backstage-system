@@ -12,6 +12,7 @@ var assign = require('./utils/array-append-assign')
 
 var IS_PROD_ENV = process.env.NODE_ENV === 'production'
 console.log('IS_PROD_ENV', IS_PROD_ENV)
+console.log('BABEL_ENV', process.env.BABEL_ENV)
 var customizedConfig =
       IS_PROD_ENV ? require('./webpack.prod.config') : require('./webpack.dev.config')
 
