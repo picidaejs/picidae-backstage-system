@@ -5,7 +5,7 @@
 自动搭建一个较为完善（看的过去）的后台系统。
 
 ## 入手项目须知
-1. :boom:留意！`package.json` 中的 `scripts`
+[开发需读](./Develop.md)
 
 ## TODO
 
