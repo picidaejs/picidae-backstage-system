@@ -20,10 +20,15 @@
     - 同步预览更新
 - (picidae)指令的配置和监控
 - 权限控制（不打算使用数据库）
+- 数据分析 + 可视化
+    - seo
+    - ...
+- 可拔插的设计！！！（pluggable）
 
 ## Other Todo (细节实现)
 
 - [x] lint 添加至 git_hook
+- [ ] 使用Travis进行持续集成
 
 ## Dependencies
 

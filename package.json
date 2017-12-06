@@ -10,6 +10,8 @@
     "nodemon": "nodemon -w dist/backend ./dist/backend",
     "postinstall": "ln -sf \"$PWD\"\"/scripts/pre-commit\" .git/hooks",
     "test": "mocha dist/backend/test/**",
+    "test:web": "mocha dist/backend/test/web/**",
+    "test:lib": "mocha dist/backend/test/lib/**",
     "babel:build": "rm -rf dist/* && mkdir -p dist && babel src -d dist --ignore=src/frontend/**.js* -D",
     "back:dev": "babel src -d dist --ignore=src/frontend/** -Dw",
     "front:dev": "cd src/frontend && cross-env NODE_ENV=development BABEL_ENV=browser webpack-dev-server --progress",
@@ -26,6 +28,7 @@
     "koa-router": "^7.3.0",
     "koa-send": "^4.1.1",
     "koa-static": "^4.0.2",
+    "mkdirp": "^0.5.1",
     "nodemon": "^1.12.4",
     "swagger-ui-dist": "^3.6.0"
   },

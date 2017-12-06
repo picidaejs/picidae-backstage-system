@@ -37,6 +37,7 @@
     ]
   ],
   "ignore": [
-    "public/**"
+    "public/**",
+    "database/*.json"
   ]
 }
