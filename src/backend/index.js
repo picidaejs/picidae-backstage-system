@@ -56,7 +56,7 @@ app
         ctx.redirect('/swagger/')
       }
       await next()
-    },
+    }
   )
   .use(mount('/swagger', swaggerAssert))
   .use(
@@ -84,8 +84,7 @@ app.use(async (ctx, next) => {
 const routes = require('./routes/index')
 routes.prefix('/api')
 
-app
-  .use(routes.routes())
+app.use(routes.routes())
 /* END 业务逻辑路由加载 */
 
 const port = process.env.PORT || 3000

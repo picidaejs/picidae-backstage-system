@@ -29,6 +29,13 @@ module.exports = assign(
       filename: '[name]-bundle-[hash].js',
       chunkFilename: '[name]-[chunkhash].js'
     },
+    resolve: {
+      alias: {
+        '@pages': nps.join(__dirname, 'node_modules/@pages'),
+        '@utils': nps.join(__dirname, 'node_modules/@utils'),
+        '@comps': nps.join(__dirname, 'node_modules/@comps')
+      }
+    },
     plugins: [
       new ExtractTextPlugin({
         filename: '[name].[contenthash].css',

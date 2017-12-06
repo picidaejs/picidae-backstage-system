@@ -21,13 +21,17 @@
         "targets": {
           "node": "6.10",
           "browsers": ["last 2 versions"]
-        }
+        },
+        "loose": true,
+        "useBuiltIns": true
       }
     ],
     "react"
   ],
   "plugins": [
     "transform-decorators-legacy",
+    "transform-class-properties",
+    "transform-object-rest-spread",
     [
       "transform-runtime",
       {

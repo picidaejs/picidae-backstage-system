@@ -8,13 +8,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router } from 'react-router'
 import { createHashHistory } from 'history'
+import { Provider } from 'mobx-react'
 import { AppContainer } from 'react-hot-loader'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import '@assets/style/reset.less'
 import createElement from './utils/createElement'
 import wrapRoutes from './utils/wrapRoutes'
+import GlobalState from './main/GlobalState'
 
+const globalState = new GlobalState()
 let key = 0
 function appStart() {
   const routes = require('./main/routes')
@@ -26,7 +29,9 @@ function appStart() {
   ReactDOM.render(
     <AppContainer>
       <MuiThemeProvider>
-        <Router key={key++} {...ctxProps} />
+        <Provider globalState={globalState}>
+          <Router key={key++} {...ctxProps} />
+        </Provider>
       </MuiThemeProvider>
     </AppContainer>,
     document.querySelector('#root')
