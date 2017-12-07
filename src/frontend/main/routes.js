@@ -6,6 +6,7 @@
  */
 import Layout from '@comps/Layout'
 
+
 module.exports = {
   path: '/',
   component: Layout,

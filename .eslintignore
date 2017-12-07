@@ -1,2 +1,3 @@
 #*.test.*
 /src/backend/public/
+!/src/frontend/node_modules/
