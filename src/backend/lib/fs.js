@@ -45,4 +45,8 @@ fs.readFileAsync = async function (path, options) {
   })
 }
 
+fs.walk = function (filename) {
+  fs.readdirSync(filename)
+}
+
 module.exports = fs
