@@ -2,10 +2,12 @@
  * @file: jsonDataBase
  * @author: Cuttle Cong
  * @date: 2017/12/4
- * @description: 
+ * @description:
  */
 
 const fs = require('fs')
+const nps = require('path')
+const ruleMatch = require('./ruleMatch')
 
 function assertPath(path) {
   if (typeof path !== 'string') {
@@ -45,8 +47,24 @@ fs.readFileAsync = async function (path, options) {
   })
 }
 
-fs.walk = function (filename) {
-  fs.readdirSync(filename)
+fs.walk = function (filename, options = {}) {
+  const { filter = () => true, action } = options
+  if (!fs.isDirectory(filename)) {
+    throw new Error(`${filename} is not an directory`)
+  }
+
+  filename = nps.resolve(filename)
+  const paths = fs.readdirSync(filename)
+  paths.forEach(name => {
+    let fullname = nps.join(filename, name)
+    if (fs.isFile(fullname)) {
+      if (ruleMatch(filter, fullname)) {
+        typeof action === 'function' && action(fullname)
+      }
+    } else {
+      fs.walk(fullname, options)
+    }
+  })
 }
 
 module.exports = fs
