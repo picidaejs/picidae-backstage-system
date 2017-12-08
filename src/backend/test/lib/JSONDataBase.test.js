@@ -14,6 +14,12 @@ require('should')
 /* eslint-disable no-unused-vars */
 let db
 
+function requireLatest(path) {
+  path = require.resolve(path)
+  delete require.cache[path]
+  return require(path)
+}
+
 describe('JSONDataBase', function () {
   it('should throw not exist `path` error', function () {
     try {
@@ -36,12 +42,49 @@ describe('JSONDataBase', function () {
     db.getData().should.be.eql({})
   })
 
+  const data = {
+    k: ['hello', 'world', new Date().getTime()],
+    str: ['str']
+  }
   it('should the data equals special object', async function () {
     db = new JSONDataBase(nps.join(fixturePath, 'db.json'))
-    const data = ['hello', 'world', new Date().getTime()]
-    db.data = data
-    await db.save()
-
-    db.getData().should.be.eql(data)
+    db.set('key', data)
+    db.get('key').should.be.eql({ ...data, $id: 'key' })
   })
+
+  it('should find only the one item', function () {
+    db.find({ str: ['str'] }).should.be.eql({ ...data, $id: 'key' })
+  })
+
+  it('should find all matched items', function () {
+    db.set('key2', { str: ['str'] })
+    const expect = [
+      { ...data, $id: 'key' },
+      { str: ['str'], $id: 'key2' }
+    ]
+    db.findAll({ str: ['str'] }).should.be.eql(expect)
+    db.delete('key2')
+  })
+
+  it('should the content of db file be equals', async function () {
+    await db.save({ beautify: false })
+    const expect = {
+      dict: { key: data },
+      order: ['key']
+    }
+    requireLatest(nps.join(fixturePath, 'db.json')).should.eql(expect)
+  })
+
+  it('should delete the db data of `key`', async function () {
+    db.delete('key')
+    db.has('key').should.false()
+
+    await db.save({ beautify: false })
+    const expect = {
+      dict: {},
+      order: []
+    }
+    requireLatest(nps.join(fixturePath, 'db.json')).should.eql(expect)
+  })
+
 })
