@@ -11,11 +11,15 @@ const mount = require('koa-mount')
 const send = require('koa-send')
 const bodyParser = require('koa-bodyparser')
 const Router = require('koa-router')
+const onerror = require('koa-onerror')
 
 const app = new Koa()
 const router = new Router()
 const swaggerUiAssetPath = require('./public/swagger-ui-dist').getAbsoluteFSPath()
 
+/* START 数据初始化 */
+require('./logic/initer')
+/* END 数据初始化 */
 
 app.use(bodyParser())
 // x-response-time
@@ -71,6 +75,12 @@ app
 /* START 通用中间件加载 */
 app.use(async (ctx, next) => {
   ctx.h = {
+    fail(message) {
+      this.json(502, message)
+    },
+    success(data) {
+      this.json(200, data)
+    },
     json(code, data) {
       ctx.body = { code, data }
       ctx.response.status = code
@@ -85,6 +95,9 @@ const routes = require('./routes/index')
 routes.prefix('/api')
 
 app.use(routes.routes())
+
+onerror(app)
+
 /* END 业务逻辑路由加载 */
 
 const port = process.env.PORT || 3000

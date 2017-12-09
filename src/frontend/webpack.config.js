@@ -33,7 +33,8 @@ module.exports = assign(
       alias: {
         '@pages': nps.join(__dirname, 'node_modules/@pages'),
         '@utils': nps.join(__dirname, 'node_modules/@utils'),
-        '@comps': nps.join(__dirname, 'node_modules/@comps')
+        '@comps': nps.join(__dirname, 'node_modules/@comps'),
+        '@assets': nps.join(__dirname, 'node_modules/@assets')
       }
     },
     plugins: [

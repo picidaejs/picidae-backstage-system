@@ -12,12 +12,11 @@ router
   .post('/login', async (ctx) => {
     const { username, password } = ctx.request.body
     if (username === 'imcuttle' && password === 'imcuttle') {
-      ctx.h.json(200, 'login success!')
+      ctx.h.success('login success!')
     }
     else {
-      ctx.h.json(502, 'login failed')
+      ctx.h.fail('login failed')
     }
   })
-  .post('/add_export')
 
 module.exports = router

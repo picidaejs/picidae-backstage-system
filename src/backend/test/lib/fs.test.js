@@ -15,8 +15,9 @@ describe('fs', function () {
   it('fs.walk', function () {
     const options = {
       filter: /b\.txt$/,
-      action: function(fullname) {
-        fullname.should.endWith('root/b/b.txt')
+      action: function(fullname, type) {
+        type === 'file'
+        && fullname.should.endWith('root/b/b.txt')
       }
     }
     fs.walk(nps.join(fixturePath, 'root'), options)

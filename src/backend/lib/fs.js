@@ -48,7 +48,7 @@ fs.readFileAsync = async function (path, options) {
 }
 
 fs.walk = function (filename, options = {}) {
-  const { filter = () => true, action } = options
+  const { filter = () => true, filterDir = () => true, action } = options
   if (!fs.isDirectory(filename)) {
     throw new Error(`${filename} is not an directory`)
   }
@@ -59,9 +59,11 @@ fs.walk = function (filename, options = {}) {
     let fullname = nps.join(filename, name)
     if (fs.isFile(fullname)) {
       if (ruleMatch(filter, fullname)) {
-        typeof action === 'function' && action(fullname)
+        typeof action === 'function' && action(fullname, 'file')
       }
     } else {
+      typeof action === 'function'
+        && ruleMatch(filterDir, fullname) && action(fullname, 'dir')
       fs.walk(fullname, options)
     }
   })
