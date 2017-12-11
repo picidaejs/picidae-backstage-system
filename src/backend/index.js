@@ -9,6 +9,7 @@ const Koa = require('koa')
 const serve = require('koa-static')
 const mount = require('koa-mount')
 const send = require('koa-send')
+const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const Router = require('koa-router')
 const onerror = require('koa-onerror')
@@ -21,6 +22,8 @@ const swaggerUiAssetPath = require('./public/swagger-ui-dist').getAbsoluteFSPath
 require('./logic/initer')
 /* END 数据初始化 */
 
+app.keys = ['picidae', 'backstage-system']
+app.use(session(app))
 app.use(bodyParser())
 // x-response-time
 app.use(async (ctx, next) => {

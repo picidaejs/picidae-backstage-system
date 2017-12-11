@@ -10,6 +10,14 @@
             "moduleMapper": "",
             "easyModuleMapper": { "enable": false }
           }
+        ],
+        [
+          "tiny-import",
+          {
+            "test": "lodash",
+            "moduleMapper": "",
+            "easyModuleMapper": { "enable": false }
+          }
         ]
       ]
     }

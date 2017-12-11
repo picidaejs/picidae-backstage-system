@@ -7,13 +7,14 @@
 var webpack = require('webpack')
 
 module.exports = {
-  devtool: 'cheap-source-map',
+  devtool: 'eval',
   devServer: {
+    overlay: true,
     historyApiFallback: true,
     hot: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000'
+      '/api/*': {
+        target: 'http://localhost:3000/api'
       }
     }
   },

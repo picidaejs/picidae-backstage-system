@@ -22,32 +22,45 @@ module.exports = assign(
       'app': [
         !IS_PROD_ENV && 'react-hot-loader/patch',
         './index.js'
-      ].filter(Boolean)
+      ].filter(Boolean),
+      vendor: [
+        'react', 'react-router', 'react-dom',
+        'classnames', '@fe/utils/fetch'
+      ]
     },
     output: {
       path: nps.join(__dirname, '../../dist/frontend'),
-      filename: '[name]-bundle-[hash].js',
-      chunkFilename: '[name]-[chunkhash].js'
+      filename: '[name]-bundle-[hash:6].js',
+      chunkFilename: '[name]-[chunkhash:6].js'
     },
     resolve: {
       alias: {
-        '@pages': nps.join(__dirname, 'node_modules/@pages'),
-        '@utils': nps.join(__dirname, 'node_modules/@utils'),
-        '@comps': nps.join(__dirname, 'node_modules/@comps'),
-        '@assets': nps.join(__dirname, 'node_modules/@assets')
+        '@fe': nps.join(__dirname, 'node_modules/@fe')
       }
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        fetch: '@fe/utils/fetch'
+      }),
       new ExtractTextPlugin({
-        filename: '[name].[contenthash].css',
+        filename: '[name].[contenthash:6].css',
         disable: !IS_PROD_ENV
       }),
+      // TODO: DLL
       new webpack.optimize.CommonsChunkPlugin({
-        names: ['common'],
-        filename: '[name]-[hash].js'
+        names: ['vendor', 'common'],
+        filename: '[name]-[hash:6].js'
       }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   deepChildren: true,
+      //   children: true,
+      //   minChunks: Infinity,
+      //   names: ['vendor'],
+      //   filename: '[name]-[hash:6].js'
+      // }),
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
+        hash: false,
         template: './template.html'
       })
     ],

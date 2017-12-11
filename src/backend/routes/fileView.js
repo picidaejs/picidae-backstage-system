@@ -11,15 +11,33 @@ const nps = require('path')
 const fileToTree = require('../lib/fileToTree')
 const { root } = require('../lib/context')
 
+function tree2UI(tree) {
+  if (!tree) return
+  if (Array.isArray(tree)) {
+    return tree.map(tree2UI)
+  }
+  const { file, type, files, ...rest } = tree
+  return {
+    ...rest,
+    module: file,
+    leaf: type === 'file' ? true : void 0,
+    children: tree2UI(files)
+  }
+}
 
-
-const router = new Router()
-router
-  .get('/get', async ctx => {
-    const data = fileToTree(root)
-    data.file = nps.basename(data.file)
-    ctx.h.success(data)
-  })
-  .get('/add_export')
-
-module.exports = router
+module.exports =
+  new Router()
+    .get('/get', async ctx => {
+      let data = ctx.session.tree
+      if (!data) {
+        data = fileToTree(root)
+        data.file = nps.basename(data.file)
+        data = tree2UI(data)
+      }
+      ctx.h.success(data)
+    })
+    .post('/set', async ctx => {
+      const data = ctx.request.body
+      ctx.session.tree = data
+      ctx.h.success('data is setting successfully')
+    })

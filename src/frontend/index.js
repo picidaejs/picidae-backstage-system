@@ -12,15 +12,19 @@ import { Provider } from 'mobx-react'
 import { AppContainer } from 'react-hot-loader'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-import '@assets/style/reset.less'
+import '@fe/assets/style/index.less'
 import createElement from './utils/createElement'
 import wrapRoutes from './utils/wrapRoutes'
 import GlobalState from './main/GlobalState'
 
+console.debug = process.env.NODE_ENV === 'development'
+  ? console.log.bind(console, '@debug')
+  : console.log
+
 const globalState = new GlobalState()
 let key = 0
 function appStart() {
-  const routes = require('./main/routes')
+  const routes = require('!@rd/async-router-loader!./main/routes')
   const ctxProps = {
     routes: wrapRoutes(routes),
     createElement,

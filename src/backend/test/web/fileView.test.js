@@ -30,33 +30,23 @@ describe('FileView', function () {
           .then(res => {
             res.body.should.have.properties('data', 'code')
             res.body.code.should.be.a.Number()
+            // eslint-disable-next-line no-unused-vars
             const expected = {
-              type: 'dir',
-              file: 'root',
-              files: [
+              'module': 'root', 'children': [
                 {
-                  type: 'dir',
-                  file: 'a',
-                  files: [
-                    {
-                      type: 'dir',
-                      file: 'a-1',
-                      files: [{ type: 'file', file: 'a-1.txt' }]
-                    },
-                    { type: 'file', file: 'a.txt' }
+                  'module': 'a', 'children': [
+                    { 'module': 'a-1', 'children': [{ 'module': 'a-1.txt', 'leaf': true }] },
+                    { 'module': 'a.txt', 'leaf': true }
                   ]
                 },
                 {
-                  type: 'dir',
-                  file: 'b',
-                  files: [
-                    { type: 'file', file: 'b.txt' }
-                  ]
+                  'module': 'b',
+                  'children': [{ 'module': 'b.txt', 'leaf': true }]
                 }
               ]
             }
 
-            res.body.data.type.should.eql('dir')
+            res.body.data.module.should.eql('root')
           })
       })
 
