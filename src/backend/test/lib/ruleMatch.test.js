@@ -6,8 +6,6 @@
  */
 
 const ruleMatch = require('../../lib/ruleMatch')
-const nps = require('path')
-const fixturePath = nps.join(__dirname, '../fixture')
 
 require('should')
 

@@ -68,7 +68,7 @@ module.exports = assign(
       rules: [
         {
           test: /\.jsx?$/,
-          include: [__dirname],
+          include: [nps.join(__dirname, '..')],
           use: {
             loader: 'babel-loader',
             options: {

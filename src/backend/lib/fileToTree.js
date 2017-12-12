@@ -19,7 +19,7 @@ function filesToTree(root, file, options = {}) {
     if (ruleMatch(filter, file)) {
       return Object.assign({
         type: 'file',
-        file: file.substring(root.length).replace(/^\//, ''),
+        file: file.substring(root.length).replace(/^\//, '')
       }, extra)
     }
   }

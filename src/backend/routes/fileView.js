@@ -28,16 +28,18 @@ function tree2UI(tree) {
 module.exports =
   new Router()
     .get('/get', async ctx => {
-      let data = ctx.session.tree
+      let data = ctx.session.fileTreeData
       if (!data) {
-        data = fileToTree(root)
-        data.file = nps.basename(data.file)
-        data = tree2UI(data)
+        let tree = fileToTree(root)
+        tree.file = nps.basename(tree.file)
+        tree = tree2UI(tree)
+        data = tree
       }
+      // data.tree = treeEmbedIdentifier(data.tree)
       ctx.h.success(data)
     })
     .post('/set', async ctx => {
       const data = ctx.request.body
-      ctx.session.tree = data
+      ctx.session.fileTreeData = data
       ctx.h.success('data is setting successfully')
     })

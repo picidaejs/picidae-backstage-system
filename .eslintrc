@@ -18,7 +18,8 @@
     "no-use-before-define": ["error"],
     "no-undef": ["error"],
     "array-bracket-spacing": ["error", "never"],
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "react/prop-types": [ true, { "ignore": ["children"]}]
   },
   "parserOptions": {
     "ecmaVersion": 8,

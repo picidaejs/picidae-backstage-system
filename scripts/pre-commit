@@ -4,10 +4,10 @@ SELF_PATH="$(readlink "$SELF_PATH" || echo $SELF_PATH)"
 DIR_PATH="$(dirname "$SELF_PATH")"
 
 cd $DIR_PATH/..
-./node_modules/.bin/eslint ../src --fix
+./node_modules/.bin/eslint ./src --fix
 
 old_exit_code=$?
 if [[ !"$old_exit_code" -eq "0" ]]; then
-  echo -e "\033[1;31mShit! Error Happened: eslint\nPlease fix them and then commit :)" >&2
+  echo -e "\033[1;31m Shit! Error Happened: eslint\n  Please fix them and then commit :)" >&2
   exit $old_exit_code
 fi
