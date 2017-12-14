@@ -42,9 +42,13 @@ class JSONDataBase {
     } finally {
       this._initDataStruction()
     }
-    process.on('SIGINT', async () => {
+    const exit = async () => {
       await this.save()
-    })
+    }
+
+    process
+      .on('SIGINT', exit)
+      .on('SIGTERM', exit)
   }
 
   loadDataSync() {
@@ -59,6 +63,12 @@ class JSONDataBase {
 
   getData() {
     return this.data.dict
+  }
+
+  clear() {
+    this.data = {}
+    this.data.dict = {}
+    this.data.order = []
   }
 
   _initDataStruction() {

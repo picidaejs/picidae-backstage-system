@@ -10,6 +10,7 @@ import { Router } from 'react-router'
 import { createHashHistory } from 'history'
 import { Provider } from 'mobx-react'
 import { AppContainer } from 'react-hot-loader'
+import { useStrict } from 'mobx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import '@fe/assets/style/index.less'
@@ -17,6 +18,7 @@ import createElement from './utils/createElement'
 import wrapRoutes from './utils/wrapRoutes'
 import GlobalState from './main/GlobalState'
 
+useStrict(true)
 console.debug = process.env.NODE_ENV === 'development'
   ? console.log.bind(console, '@debug')
   : console.log

@@ -38,11 +38,11 @@ fs.writeFileAsync = async function (path, data, options) {
 
 fs.readFileAsync = async function (path, options) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, options, function (err) {
+    fs.readFile(path, options, function (err, data) {
       if (err) {
         reject(err)
       }
-      resolve()
+      resolve(data)
     })
   })
 }

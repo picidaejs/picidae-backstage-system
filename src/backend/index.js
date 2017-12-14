@@ -13,6 +13,10 @@ const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const Router = require('koa-router')
 const onerror = require('koa-onerror')
+const nps = require('path')
+
+const JSONDataBase = require('./lib/JSONDataBase')
+const config = require('./logic/config')
 
 const app = new Koa()
 const router = new Router()
@@ -21,9 +25,28 @@ const swaggerUiAssetPath = require('./public/swagger-ui-dist').getAbsoluteFSPath
 /* START 数据初始化 */
 require('./logic/initer')
 /* END 数据初始化 */
-
 app.keys = ['picidae', 'backstage-system']
-app.use(session(app))
+const db = new JSONDataBase(nps.join(config.path.runtime, 'session.json'))
+const options = {
+  store: {
+    get(key) {
+      const prev = db.get(key)
+      if (prev && prev._expire >= Date.now()) {
+        return prev
+      }
+
+      db.delete(key)
+      return
+    },
+    set(key, sess) {
+      return db.set(key, sess)
+    },
+    destroy(key) {
+      db.delete(key)
+    }
+  }
+}
+app.use(session(options, app))
 app.use(bodyParser())
 // x-response-time
 app.use(async (ctx, next) => {
@@ -56,6 +79,10 @@ app.use(router.routes())
 const swaggerAssert = serve(swaggerUiAssetPath, {
   gzip: true
 })
+const acejsAssert = serve(config.path.public_Ace, {
+  gzip: true
+})
+
 app
   .use(
     async (ctx, next) => {
@@ -65,6 +92,7 @@ app
       await next()
     }
   )
+  .use(mount('/acejs', acejsAssert))
   .use(mount('/swagger', swaggerAssert))
   .use(
     mount('/swagger/api-swagger.yaml',
@@ -106,6 +134,10 @@ onerror(app)
 const port = process.env.PORT || 3000
 const server = app.listen(port, () => {
   console.log('Server run on Port: %d', port)
+})
+
+process.on('SIGINT', function () {
+  server.close()
 })
 
 module.exports = {

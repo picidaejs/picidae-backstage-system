@@ -12,11 +12,12 @@ module.exports = {
     overlay: true,
     historyApiFallback: true,
     hot: true,
-    proxy: {
-      '/api/*': {
-        target: 'http://localhost:3000/api'
+    proxy: [
+      {
+        context: ['/acejs', '/api'],
+        target: 'http://localhost:3000'
       }
-    }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
