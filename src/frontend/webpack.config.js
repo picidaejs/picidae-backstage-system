@@ -16,6 +16,19 @@ console.log('BABEL_ENV', process.env.BABEL_ENV)
 var customizedConfig =
       IS_PROD_ENV ? require('./webpack.prod.config') : require('./webpack.dev.config')
 
+const postcssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    ident: 'postcss',
+    plugins(/*loader*/) {
+      return [
+        require('autoprefixer')(),
+        require('cssnano')({ zindex: false })
+      ]
+    }
+  }
+}
+
 module.exports = assign(
   {
     entry: {
@@ -81,18 +94,7 @@ module.exports = assign(
           use: ExtractTextPlugin.extract({
             use: [
               { loader: 'css-loader', options: { minimize: true } },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  ident: 'postcss',
-                  plugins(/*loader*/) {
-                    return [
-                      require('autoprefixer')(),
-                      require('cssnano')()
-                    ]
-                  }
-                }
-              },
+              postcssLoader,
               { loader: 'less-loader' }
             ],
             fallback: 'style-loader'
@@ -103,18 +105,7 @@ module.exports = assign(
           use: ExtractTextPlugin.extract({
             use: [
               { loader: 'css-loader', options: { minimize: true } },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  ident: 'postcss',
-                  plugins(/*loader*/) {
-                    return [
-                      require('autoprefixer')(),
-                      require('cssnano')()
-                    ]
-                  }
-                }
-              }
+              postcssLoader
             ],
             fallback: 'style-loader'
           })

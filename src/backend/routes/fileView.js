@@ -11,7 +11,7 @@ const nps = require('path')
 const fileToTree = require('../lib/fileToTree')
 const fs = require('../lib/fs')
 const { root } = require('../lib/context')
-const { getActiveNode, treeEmbedIdentifier } = require('@common/tree-helper')
+const { treeEmbedIdentifier } = require('@common/tree-helper')
 
 const ROOT_DIRNAME = nps.dirname(root)
 
@@ -29,8 +29,12 @@ function tree2UI(tree) {
   }
 }
 
+function getAbsolutePath(path) {
+  return nps.join(ROOT_DIRNAME, path)
+}
+
 async function getFileContent(identifier) {
-  const filename = nps.join(ROOT_DIRNAME, identifier)
+  const filename = getAbsolutePath(identifier)
   if (fs.isFile(filename)) {
     return await fs.readFileAsync(filename, { encoding: 'utf8' })
   }
@@ -49,18 +53,24 @@ module.exports =
         data = tree
       }
       data = treeEmbedIdentifier(data)
-      const active = getActiveNode(data)
-      let fileContent = false
-      if (active) {
-        fileContent = await getFileContent(active.identifier)
-      }
-      // data.tree = treeEmbedIdentifier(data.tree)
-      ctx.h.success({ tree: data, fileContent })
+      ctx.h.success(data)
     })
     .post('/set', async ctx => {
       const data = ctx.request.body
       ctx.session.fileTreeData = data
       ctx.h.success('data is setting successfully')
+    })
+    .get('/exact/:path', async ctx => {
+      const { path } = ctx.params
+      if (!path) {
+        ctx.response.status = 404
+      }
+      else {
+        const filename = getAbsolutePath(path)
+        if (fs.isFile(filename)) {
+          await ctx.send(filename, { root: '/' })
+        }
+      }
     })
     .get('/spec', async ctx => {
       const { identifier } = ctx.query

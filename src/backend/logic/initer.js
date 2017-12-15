@@ -13,5 +13,5 @@ mkdirp.sync(path.runtime)
 
 context.__assign({
   // root: nps.join(__dirname, '../..')
-  root: nps.join(__dirname, '..')
+  root: nps.join(__dirname, '../../../test')
 })

@@ -12,7 +12,10 @@ const send = require('koa-send')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
 const Router = require('koa-router')
+const etag = require('koa-etag')
 const onerror = require('koa-onerror')
+const conditional = require('koa-conditional-get')
+
 const nps = require('path')
 
 const JSONDataBase = require('./lib/JSONDataBase')
@@ -46,8 +49,11 @@ const options = {
     }
   }
 }
+
+app.use(conditional())
 app.use(session(options, app))
 app.use(bodyParser())
+app.use(etag())
 // x-response-time
 app.use(async (ctx, next) => {
   const start = Date.now()
@@ -105,6 +111,10 @@ app
 
 /* START 通用中间件加载 */
 app.use(async (ctx, next) => {
+  ctx.send = function (filename, options) {
+    return send.call(ctx, ctx, filename, options)
+  }
+
   ctx.h = {
     fail(message) {
       this.json(502, message)
