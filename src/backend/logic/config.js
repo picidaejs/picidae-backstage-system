@@ -6,7 +6,7 @@
  */
 const nps = require('path')
 
-export const path = {
+exports.path = {
   runtime: nps.join(__dirname, '../runtime'),
   public: nps.join(__dirname, '../public'),
   public_Ace: nps.join(__dirname, '../public/acejs')
