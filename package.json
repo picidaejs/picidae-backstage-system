@@ -92,10 +92,7 @@
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/picidaejs/picidae-backstage-system.git"
-  },
+  "repository": "picidaejs/picidae-backstage-system",
   "bugs": {
     "url": "https://github.com/picidaejs/picidae-backstage-system/issues"
   },
