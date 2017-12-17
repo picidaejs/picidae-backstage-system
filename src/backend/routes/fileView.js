@@ -69,6 +69,9 @@ module.exports =
         const filename = getAbsolutePath(path)
         if (fs.isFile(filename)) {
           await ctx.send(filename, { root: '/' })
+        } else {
+          ctx.response.status = 204
+          ctx.body = null
         }
       }
     })
