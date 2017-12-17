@@ -18,7 +18,14 @@
     "back:build": "rm -rf dist/{backend,node_modules} && babel src -d dist --ignore=src/frontend/** -D",
     "front:dev": "cd src/frontend && cross-env NODE_ENV=development BABEL_ENV=browser webpack-dev-server --progress",
     "front:build": "rm -rf dist/frontend/*; cd src/frontend && cross-env NODE_ENV=production BABEL_ENV=browser webpack ",
-    "lint": "eslint ./src --fix"
+    "lint": "eslint ./src --fix",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "npm run lint",
+      "git add"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -67,6 +74,7 @@
     "js-tree": "^2.0.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "lint-staged": "^6.0.0",
     "lodash": "^4.17.4",
     "material-ui": "^0.20.0",
     "mobx": "^3.4.0",
