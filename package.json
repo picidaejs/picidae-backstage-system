@@ -2,7 +2,7 @@
   "name": "picidae-backstage-system",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "[![NPM version][npm-image]][npm-url] [![build status][travis-image]][travis-url] [![Test coverage][coveralls-image]][coveralls-url] [![Dependency Status][depstat-image]][depstat-url] [![Dev Dependency Status][devdepstat-image]][devdepstat-url]",
   "main": "dist/backend/index.js",
   "scripts": {
     "start": "node .",
@@ -88,5 +88,16 @@
     "test2doc": "^0.3.5",
     "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.5"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/picidaejs/picidae-backstage-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/picidaejs/picidae-backstage-system/issues"
+  },
+  "homepage": "https://github.com/picidaejs/picidae-backstage-system#readme"
 }
